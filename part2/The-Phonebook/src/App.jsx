@@ -17,7 +17,7 @@ const App = () => {
     phoneServices.getAll().then((initialPersons) => {
       setPersons(initialPersons);
     });
-  }, [add]);
+  }, []);
 
   const addName = (event) => {
     event.preventDefault();
