@@ -1,73 +1,30 @@
-import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Country from "./Country";
+import { getAllCountries } from "./services/Country-Service";
 
 const App = () => {
-  const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState({});
-  const [search, setSearch] = useState("");
-  const [show, setShow] = useState(false);
-
-  const url = "https://studies.cs.helsinki.fi/restcountries/api/all";
-  const getAll = async () => {
-    return await axios.get(url).then((res) => {
-      return res.data;
-    });
-  };
-  const getCountry = async (name) => {
-    return await axios
-      .get(
-        `https://studies.cs.helsinki.fi/restcountries/api/name/${name.toLowerCase()}`
-      )
-      .then((res) => {
-        return res.data;
-      });
-  };
+  // const [countries, setCountries] = useState([]);
   useEffect(() => {
-    getAll().then((data) => {
-      setCountries(data);
+    getAllCountries().then((data) => {
+      console.log(data);
     });
   }, []);
-
-  useEffect(() => {
-    if (search) {
-      getCountry(countries[0].name.common).then((data) => {
-        setCountry(data);
-      });
-    }
-  }, [countries, search]);
-
+  // console.log(countries);
   const handleChange = (e) => {
-    setSearch(e.target.value);
-    const filtered = countries.filter((country) => {
-      return country.name.official.toLowerCase().includes(search.toLowerCase());
-    });
-    setCountries(filtered);
+    console.log(e.target.value);
   };
   return (
     <div>
-      <p>
-        Find Countries{" "}
+      <span>
+        Find countries{" "}
         <input
           type="text"
-          onChange={handleChange}
+          onChange={(e) => handleChange(e)}
         />
-      </p>
-      {countries.length === 1 ? (
-        <Country country={country} />
-      ) : countries.length > 10 ? (
-        <p>Too many matches, specify another filter</p>
-      ) : (
-        countries.map((country) => (
-          <div key={country.name.common}>
-            {country.name.official}
-            <button onClick={() => setShow(true)}>show</button>
-          </div>
-        ))
-      )}
+      </span>
+      <div></div>
+      <Country />
     </div>
   );
 };
-
 export default App;
