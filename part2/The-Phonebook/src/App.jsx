@@ -6,12 +6,12 @@ import FilterSearch from "./Phone/Filter-Search";
 import Notification from "./Phone/Notification";
 
 const App = () => {
-  const [add,setAdd] = useState(false)
+  const [add, setAdd] = useState(false);
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [search, setSearch] = useState("");
-  const[error,setError] = useState('error')
+  const [error, setError] = useState("");
 
   useEffect(() => {
     phoneServices.getAll().then((initialPersons) => {
@@ -21,8 +21,12 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault();
-    setAdd(!add)
-    if (persons.find((person) => person.name === newName && person.number === newNumber)) {
+    setAdd(!add);
+    if (
+      persons.find(
+        (person) => person.name === newName && person.number === newNumber
+      )
+    ) {
       alert(`${newName} is already added to phonebook`);
       return;
     }
@@ -68,6 +72,7 @@ const App = () => {
     if (window.confirm(`Delete ${person.name} ?`)) {
       phoneServices.deletePerson(id).then(() => {
         setPersons(persons.filter((person) => person.id !== id));
+        setError(`Deleted ${person.name}`);
       });
     }
   };
