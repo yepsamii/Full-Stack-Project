@@ -1,4 +1,5 @@
 import axios from "axios";
+export const apiKey = import.meta.env.VITE_SOME_KEY;
 
 export const getAllCountries = async () => {
   return await axios
@@ -17,3 +18,12 @@ export const getCountry = async (name) => {
     });
 }
 
+export const getWeather = async (capital) => {
+  return await axios
+    .get(
+      `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${apiKey}`
+    )
+    .then((res) => {
+      return res.data;
+    });
+}
