@@ -17,7 +17,7 @@ const App = () => {
     phoneServices.getAll().then((initialPersons) => {
       setPersons(initialPersons);
     });
-  }, []);
+  }, [add]);
 
   const addName = (event) => {
     event.preventDefault();
@@ -67,6 +67,7 @@ const App = () => {
       setError(`Added ${newName}`);
     });
   };
+
   const handleDelete = (id) => {
     const person = persons.find((person) => person.id === id);
     if (window.confirm(`Delete ${person.name} ?`)) {
@@ -76,6 +77,7 @@ const App = () => {
       });
     }
   };
+
   const filteredPersons = search
     ? persons.filter((person) =>
         person.name.toLowerCase().includes(search.toLowerCase())
