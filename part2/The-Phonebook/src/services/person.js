@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://full-stack-backend-f8kb.onrender.com/api/persons";
+const baseUrl = "/api/persons";
 
 const getAll = async () => {
   return await axios.get(baseUrl).then((res) => {
